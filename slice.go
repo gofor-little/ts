@@ -24,27 +24,13 @@ func (s *Slice) Remove(elements ...interface{}) {
 	defer s.mutex.Unlock()
 
 	for _, element := range elements {
-		for index, e := range s.Elements {
+		for i, e := range s.Elements {
 			if element == e {
-				s.Elements[index] = s.Elements[len(s.Elements)-1]
+				s.Elements[i] = s.Elements[len(s.Elements)-1]
 				s.Elements = s.Elements[:len(s.Elements)-1]
 			}
 		}
 	}
-}
-
-// Exists locks the mutex, checks if the passed element exists, returning the result and unlocking the mutex.
-func (s *Slice) Exists(element interface{}) bool {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	for _, e := range s.Elements {
-		if e == element {
-			return true
-		}
-	}
-
-	return false
 }
 
 // Length returns the length of the underlying slice of elements.
