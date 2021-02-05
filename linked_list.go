@@ -8,7 +8,7 @@ import (
 type LinkedList struct {
 	head  *LinkedListItem
 	tail  *LinkedListItem
-	mutex sync.Mutex
+	mutex sync.RWMutex
 }
 
 // Push pushes a new item to the end of the LinkedList.

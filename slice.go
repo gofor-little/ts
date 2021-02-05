@@ -7,7 +7,7 @@ import (
 // Slice wraps a standard slice and a sync.Mutex.
 type Slice struct {
 	Elements []interface{}
-	mutex    sync.Mutex
+	mutex    sync.RWMutex
 }
 
 // Add locks the mutex, adds the passed elements from the underlying slice and finally unlocks the mutex.
