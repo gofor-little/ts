@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/gofor-little/ts"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSlice(t *testing.T) {
@@ -26,19 +27,14 @@ func TestSlice(t *testing.T) {
 		slice := ts.Slice{}
 		slice.Add(tc.elements...)
 
-		if slice.Length() != len(tc.elements) {
-			t.Fatalf("unexpected ts.Slice length, wanted: %d, got: %d", len(tc.elements), slice.Length())
-		}
+		require.Equal(t, len(tc.elements), slice.Length())
+		require.Equal(t, len(tc.elements), len(slice.GetElements()))
 
 		for i := 0; i < len(tc.elements); i++ {
-			if slice.Elements[i] != tc.elements[i] {
-				t.Fatalf("unexpected result at element: %d, wanted: %+v, got: %+v", i, tc.elements[i], slice.Elements[i])
-			}
+			require.Equal(t, tc.elements[i], slice.GetElement(i))
 		}
 
 		slice.Remove(tc.elements...)
-		if slice.Length() != 0 {
-			t.Fatalf("unexpected ts.Slice length, wanted: 0, got: %d", slice.Length())
-		}
+		require.Equal(t, 0, slice.Length())
 	}
 }
