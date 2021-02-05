@@ -13,13 +13,13 @@ type LinkedList struct {
 
 // Push pushes a new item to the end of the LinkedList.
 func (l *LinkedList) Push(value interface{}) {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+
 	item := &LinkedListItem{
 		Value: value,
 		next:  nil,
 	}
-
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
 
 	if l.tail != nil {
 		l.tail.next = item
@@ -33,12 +33,12 @@ func (l *LinkedList) Push(value interface{}) {
 
 // Pop pops the first item from the start of the LinkedList.
 func (l *LinkedList) Pop() interface{} {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+
 	if l.head == nil {
 		return nil
 	}
-
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
 
 	value := l.head.Value
 	l.head = l.head.next
