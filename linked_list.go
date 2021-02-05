@@ -52,11 +52,17 @@ func (l *LinkedList) Pop() interface{} {
 
 // IsEmpty checks if the LinkedList is empty.
 func (l *LinkedList) IsEmpty() bool {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+
 	return l.head == nil
 }
 
 // GetTail returns a copy of the value in the last item of the LinkedList.
 func (l *LinkedList) GetTail() interface{} {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+
 	if l.tail == nil {
 		return nil
 	}
