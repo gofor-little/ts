@@ -34,12 +34,12 @@ func main() {
     slice := ts.Slice{}
 
     slice.Add(1, 2, 3)
-    fmt.Println(slice.Elements)
+    fmt.Println(slice.GetElements())
 
     slice.Remove(1, 2, 3)
-    fmt.Println(slice.Elements)
+    fmt.Println(slice.GetElements())
 }
 ```
 
 ### Testing
-Run ```go test ./...``` in the root directory.
+Run ```go test -v -race ./...``` in the root directory.
