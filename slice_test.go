@@ -31,8 +31,8 @@ func TestSlice(t *testing.T) {
 		}
 
 		for i := 0; i < len(tc.elements); i++ {
-			if slice.Elements[i] != tc.elements[i] {
-				t.Fatalf("unexpected result at element: %d, wanted: %+v, got: %+v", i, tc.elements[i], slice.Elements[i])
+			if slice.GetElement(i) != tc.elements[i] {
+				t.Fatalf("unexpected result at element: %d, wanted: %+v, got: %+v", i, tc.elements[i], slice.GetElement(i))
 			}
 		}
 

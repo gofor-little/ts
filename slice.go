@@ -6,7 +6,7 @@ import (
 
 // Slice wraps a standard slice and a sync.Mutex.
 type Slice struct {
-	Elements []interface{}
+	elements []interface{}
 	mutex    sync.RWMutex
 }
 
@@ -15,7 +15,7 @@ func (s *Slice) Add(elements ...interface{}) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	s.Elements = append(s.Elements, elements...)
+	s.elements = append(s.elements, elements...)
 }
 
 // Remove locks the mutex, removes the passed elements from the underlying slice and finally unlocks the mutex.
@@ -24,19 +24,33 @@ func (s *Slice) Remove(elements ...interface{}) {
 	defer s.mutex.Unlock()
 
 	for _, element := range elements {
-		for i, e := range s.Elements {
+		for i, e := range s.elements {
 			if element == e {
-				s.Elements[i] = s.Elements[len(s.Elements)-1]
-				s.Elements = s.Elements[:len(s.Elements)-1]
+				s.elements[i] = s.elements[len(s.elements)-1]
+				s.elements = s.elements[:len(s.elements)-1]
 			}
 		}
 	}
 }
 
-// Length returns the length of the underlying slice of elements.
+func (s *Slice) GetElement(index int) interface{} {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	return s.elements[index]
+}
+
+func (s *Slice) GetElements() []interface{} {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	return s.elements
+}
+
+// Length returns the length of the underlying slice of elements and finally unlocks the mutex.
 func (s *Slice) Length() int {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	return len(s.Elements)
+	return len(s.elements)
 }
