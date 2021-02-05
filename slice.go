@@ -35,5 +35,8 @@ func (s *Slice) Remove(elements ...interface{}) {
 
 // Length returns the length of the underlying slice of elements.
 func (s *Slice) Length() int {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	return len(s.Elements)
 }
